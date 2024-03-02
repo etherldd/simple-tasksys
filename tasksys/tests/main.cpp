@@ -32,19 +32,7 @@ enum TaskSystemType {
 };
 
 ITaskSystem *selectTaskSystemRefImpl(int num_threads, TaskSystemType type) {
-    assert(type < N_TASKSYS_IMPLS);
-
-    if (type == SERIAL) {
-        return new TaskSystemSerial(num_threads);
-    } else if (type == PARALLEL_SPAWN) {
-        return new TaskSystemParallelSpawn(num_threads);
-    } else if (type == PARALLEL_THREAD_POOL_SPINNING) {
-        return new TaskSystemParallelThreadPoolSpinning(num_threads);
-    } else if (type == PARALLEL_THREAD_POOL_SLEEPING) {
-        return new TaskSystemParallelThreadPoolSleeping(num_threads);
-    } else {
-        return NULL;
-    }
+    return new TaskSystem(num_threads);
 }
 
 int main(int argc, char** argv)
@@ -162,7 +150,7 @@ int main(int argc, char** argv)
         printf("============================================================="
                "======================\n");
 
-        for (int i = 0; i < N_TASKSYS_IMPLS; i++) {
+        for (int i = 0; i < 1; i++) {
             double minT = 1e30;
             for (int j = 0; j < num_timing_iterations; j++) {
 
